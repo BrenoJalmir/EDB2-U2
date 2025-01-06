@@ -1,0 +1,86 @@
+FUNÇÃO principal
+    DECLARE tree COMO vetor de inteiros
+    tree <- {50, 48, 45, 29, 15, 35, 40, 27, 26, 14, 12, 33, 30, 37, 20, 21, 19, 25}
+
+    CHAME buildHeap(tree)
+    CHAME printVector(tree)
+    CHAME heapSort(tree)
+    CHAME printVector(tree)
+
+FIM FUNÇÃO
+
+FUNÇÃO printVector(vetor v)
+    PARA i DE 0 ATÉ tamanho(v) - 1 FAÇA
+        IMPRIMA v[i]
+    FIM PARA
+FIM FUNÇÃO
+
+FUNÇÃO switchPos(vetor v, inteiro index1, inteiro index2)
+    temp <- v[index1]
+    v[index1] <- v[index2]
+    v[index2] <- temp
+FIM FUNÇÃO
+
+FUNÇÃO descend(vetor v, inteiro index)
+    DECLARE biggerPriorityIndex COMO index
+    vSize <- tamanho(v)
+
+    SE 2 * index + 1 < vSize E v[2 * index + 1] > v[biggerPriorityIndex] ENTÃO
+        biggerPriorityIndex <- 2 * index + 1
+    FIM SE
+
+    SE 2 * index + 2 < vSize E v[2 * index + 2] > v[biggerPriorityIndex] ENTÃO
+        biggerPriorityIndex <- 2 * index + 2
+    FIM SE
+
+    SE biggerPriorityIndex != index ENTÃO
+        CHAME switchPos(v, index, biggerPriorityIndex)
+        CHAME descend(v, biggerPriorityIndex)
+    FIM SE
+FIM FUNÇÃO
+
+FUNÇÃO ascend(vetor v, inteiro index)
+    father <- (index - 1) DIV 2
+    SE v[index] > v[father] ENTÃO
+        CHAME switchPos(v, index, father)
+        CHAME ascend(v, father)
+    FIM SE
+FIM FUNÇÃO
+
+FUNÇÃO alterPriority(vetor v, inteiro index, inteiro newPriority)
+    SE v[index] >= newPriority ENTÃO
+        action <- descend
+    SENÃO
+        action <- ascend
+    FIM SE
+    v[index] <- newPriority
+    CHAME action(v, index)
+FIM FUNÇÃO
+
+FUNÇÃO insertOnHeap(vetor v, inteiro key)
+    ADICIONE key AO FINAL DE v
+    CHAME ascend(v, tamanho(v) - 1)
+FIM FUNÇÃO
+
+FUNÇÃO removeRoot(vetor v)
+    SE tamanho(v) > 1 ENTÃO
+        CHAME switchPos(v, 0, tamanho(v) - 1)
+        REMOVA O ÚLTIMO ELEMENTO DE v
+        CHAME descend(v, 0)
+    FIM SE
+FIM FUNÇÃO
+
+FUNÇÃO buildHeap(vetor v)
+    PARA i DE (tamanho(v) DIV 2) - 1 ATÉ 0 PASSO -1 FAÇA
+        CHAME descend(v, i)
+    FIM PARA
+FIM FUNÇÃO
+
+FUNÇÃO heapSort(vetor v)
+    PARA i DE tamanho(v) - 1 ATÉ 1 PASSO -1 FAÇA
+        CHAME switchPos(v, 0, i)
+        temp <- SUBVETOR DE v DE 0 ATÉ i
+        CHAME descend(temp, 0)
+        COPIE temp PARA OS PRIMEIROS ELEMENTOS DE v
+    FIM PARA
+FIM FUNÇÃO
