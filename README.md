@@ -365,3 +365,18 @@
   
 </details>
 
+### Comparando resultados
+
+Alguns códigos não funcionaram para as listas de tamanho 1000000, e por isso tiveram que ser removidos do gráfico. Para melhor visualização, separamos as análises em 3 gráficos diferentes, mantendo assim uma escala mais compreensível. O eixo X de cada gráfico representa os diferentes algoritmos utilizados, enquanto que o eixo y representa o tempo em segundos que cada algoritmo levou para ser executado.
+
+**Gráfico comparando o desempenho dos algoritmos ao ordenar uma lista com 10000 elementos**
+
+![Graph10000](https://i.ibb.co/rZhzdFh/Sorts-10000.png)
+
+**Gráfico comparando o desempenho dos algoritmos ao ordenar uma lista com 10000 elementos**
+
+![Graph100000](https://i.ibb.co/Y8G0xqv/Sorts-100000.png)
+
+**Gráfico comparando o desempenho dos algoritmos ao ordenar uma lista com 10000 elementos**
+
+![Graph1000000](https://i.ibb.co/yy7f64W/Sorts-1000000.png)
