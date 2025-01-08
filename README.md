@@ -380,3 +380,16 @@ Alguns códigos não funcionaram para as listas de tamanho 1000000, e por isso t
 **Gráfico comparando o desempenho dos algoritmos ao ordenar uma lista com 10000 elementos**
 
 ![Graph1000000](https://i.ibb.co/yy7f64W/Sorts-1000000.png)
+
+Apesar de alguns algoritmos terem falhado para as listas maiores, ainda podemos retirar algumas informações para fazer uma análise. A heapsort a a quicksort recursiva foram as que se mantiveram consistentes, funcionando mesmo para listas enormes. Analisando o primeiro gráfico, que representa o desempenho na menor lista, o heapsort apresenta um desempenho superior às duas versões do bubble sort, mas ainda desempenha pior que os algoritmos quicksort e merge sort, que apresentam um desempenho similar entre si. 
+
+Algo que também vale ser mensionado é que o bubble sort "funcionou" na lista de tamanho 1000000, mas estava levando tempo demais para terminar e, por isso, teve seu processo encerrado manualmente. 
+
+Sendo assim, podemos concluir o seguinte:
+
+| Algoritmo        | Escalabilidade (Eficiência)             | Estabilidade no Desempenho |
+|------------------|------------------------------------------|----------------------------|
+| **Heapsort**     | Consistente, mas mais lento que outros, mesmo com a complexidade (O(n log n))    | Boa                        |
+| **Bubble Sort**  | Impraticável para grandes entradas       | Pobre                      |
+| **Merge Sort**   | Rápido e escalável (O(n log n))     | Estável                    |
+| **Quick Sort**   | Muito rápido (O(n log n)), funcionando muito bem mesmo para grandes listas           | Geralmente rápido          |
