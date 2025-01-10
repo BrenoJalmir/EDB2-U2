@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <cmath>
+#include <vector>
 
 struct node {
   int key;
@@ -243,27 +244,20 @@ void removeNode(node *&root, int key) {
 
 int main () {
   node *tree = NULL;
-  insertNode(tree, 50);
-  insertNode(tree, 25);
-  insertNode(tree, 75);
-  insertNode(tree, 15);
-  insertNode(tree, 35);
-  insertNode(tree, 60);
-  insertNode(tree, 120);
-  insertNode(tree, 10);
-  insertNode(tree, 68);
-  insertNode(tree, 90);
-  insertNode(tree, 125);
-  insertNode(tree, 83);
-  insertNode(tree, 99);
+  std::vector<int> L = {15, 18, 20, 35, 32, 38, 30, 40, 32, 45, 48, 52, 60, 50};
+
+  while (!L.empty()) {
+    insertNode(tree, L.at(0));
+    L.erase(L.begin());
+  }
 
   printInLevel(tree);
-  printf("\n\n");
+  printf("\n");
 
-  removeNode(tree, 120);
+  // removeNode(tree, 120);
 
-  printInLevel(tree);
-  printf("\n\n");
+  // printInLevel(tree);
+  // printf("\n\n");
 
   freeMemory(tree);
 
