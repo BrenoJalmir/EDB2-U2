@@ -10,8 +10,11 @@
   * Implementação da árvore rubro negra
   * Fluxograma da árvore rubro negra
 * Breno Jalmir de Medeiros Almeida:
-  * Código da heap máxima
-  * Código do heapsort usando heap mínima
+  * Implementação da árvore binária de busca
+  * Fluxograma de criação de árvore binária de busca
+  * Implementação da heap máxima
+  * Código do heapsort usando heap máxima
+  * Implementação da árvore avl
 * João Guilherme Martins de Azevedo:
   * Insira aqui
 
