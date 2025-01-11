@@ -1,247 +1,188 @@
 #include <iostream>
 
-class node {
-    public:
+class Node {
+public:
     int key;
-    int h; // height
-    char color;
-    node *left;
-    node *right;
+    char color; // 'R' para vermelho, 'N' para preto
+    Node *left, *right, *parent;
 
-    node(int key, int h) {
-        this->left = nullptr;
-        this->right = nullptr;
-
-        this->key = key;
-        this->h = h;
-        this->color = 'R';
-    };
+    Node(int keyValue) {
+        key = keyValue;
+        color = 'R'; // Nós novos são sempre vermelhos inicialmente
+        left = nullptr;
+        right = nullptr;
+        parent = nullptr;
+    }
 };
 
-void freeMemory(node *&root) {
-  if (root == NULL) return;
+class RedBlackTree {
+private:
+    Node *root;
 
-  freeMemory(root->left);
-  freeMemory(root->right);
+    void leftRotate(Node *&root, Node *&pt) {
+        Node *temp = pt->right;
+        pt->right = temp->left;
 
-  delete[] root;
-}
+        if (pt->right != nullptr)
+            pt->right->parent = pt;
 
-void printPreOrder(node *root) {
-  if (root == NULL) return;
-  std::cout << root->key;
-  printPreOrder(root->left);
-  printPreOrder(root->right);
-}
+        temp->parent = pt->parent;
 
-void printInOrder(node *root) {
-  if (root == NULL) return;
-  printInOrder(root->left);
-  std::cout << root->key;
-  printInOrder(root->right);
-}
+        if (pt->parent == nullptr)
+            root = temp;
+        else if (pt == pt->parent->left)
+            pt->parent->left = temp;
+        else
+            pt->parent->right = temp;
 
-void printPostOrder(node *root) {
-  if (root == NULL) return;
-  printPostOrder(root->left);
-  printPostOrder(root->right);
-  std::cout << root->key;
-}
-
-node *getNode(node *root, int key) {
-  if (root == NULL || root->key == key) return root;
-  if (root->key > key) return getNode(root->left, key);
-  else if (root->key < key) return getNode (root->right, key);
-  return root;
-}
-
-node *copyNode(node *toCopy) {
-  node *newNode = new node(toCopy->key, toCopy->h);
-  newNode->left = toCopy->left;
-  newNode->right = toCopy->right;
-  return newNode;
-}
-
-int calcHeight(node *root) {
-  int leftH = 0;
-  int rightH = 0;
-
-  if (root->left != NULL) leftH = root->left->h;
-  if (root->right != NULL) rightH = root->right->h;
-
-  return 1 + std::max(leftH, rightH);
-}
-
-void rotateLeft(node *&root) {
-  if (root == NULL) return;
-  if (root->right == NULL) return;
-  if (root->right->left == NULL) {
-    root->right->left = copyNode(root);
-    root->right->left->right = NULL;
-    root = root->right;
-    root->left->h = calcHeight(root->left);
-  } else {
-    node *temp = root->right->left; 
-    root->right->left = copyNode(root);
-    root->right->left->right = temp;
-    root = root->right;
-    root->left->h = calcHeight(root->left);
-    root->left->right->h = calcHeight(root->left->right);
-    root->h = calcHeight(root);
-  }
-}
-
-void rotateRight(node *&root) {
-  if (root == NULL) return;
-  if (root->left == NULL) return;
-  if (root->left->right == NULL) {
-    root->left->right = copyNode(root);
-    root->left->right->left = NULL;
-    root = root->left;
-    root->right->h = calcHeight(root->right);
-  } else {
-    node *temp = root->left->right;
-    root->left->right = copyNode(root);
-    root->left->right->left = temp;
-    root = root->left;
-    root->right->h = calcHeight(root->right);
-    root->right->left->h = calcHeight(root->right->left);
-    root->h = calcHeight(root);
-  }
-}
-
-int calcBalancing(node *root) {
-  int leftH = 0;
-  int rightH = 0;
-
-  if (root->left != NULL) leftH = root->left->h;
-  if (root->right != NULL) rightH = root->right->h;
-
-  return leftH - rightH;
-}
-
-void insertNode(node *&root, int key) {
-  if (root == NULL) {
-    node *newNode = new node(key, 1);
-    newNode->left = newNode->right = NULL;
-    root = newNode;
-    return;
-  }
-
-  if (key < root->key) insertNode(root->left, key);
-  else if(key > root->key) insertNode(root->right, key);
-
-  root->h = calcHeight(root);
-  int bl = calcBalancing(root);
-
-  if (bl > 1 && key < root->left->key) {
-    rotateRight(root);
-    return;
-  }
-  if (bl > 1 && key > root->left->key) {
-    rotateLeft(root->left);
-    rotateRight(root);
-    return;
-  }
-  if (bl < -1 && key > root->right->key) {
-    rotateLeft(root);
-    return;
-  }
-  if (bl < -1 && key < root->right->key) {
-    rotateRight(root->right);
-    rotateLeft(root);
-    return;
-  }
-}
-
-void removeNode(node *&root, int key) {
-  if (root == NULL) return;
-
-  if (root->key == key) {
-    if (root->left == NULL && root->right == NULL) {
-      root = NULL;
-      return;
-    } else if (root->left != NULL && root->right != NULL) {
-        node *greaterLeftNode = root->left;
-
-      while (greaterLeftNode->right != NULL) greaterLeftNode = greaterLeftNode->right;
-
-      int temp = root->key;
-      root->key = greaterLeftNode->key;
-      greaterLeftNode->key = temp;
-
-      removeNode(root->left, greaterLeftNode->key);
-      // node *lesserRightNode = root->right;
-
-      // while (lesserRightNode->left != NULL) lesserRightNode = lesserRightNode->left;
-
-      // int temp = root->key;
-      // root->key = lesserRightNode->key;
-      // lesserRightNode->key = temp;
-
-      // removeNode(root->right, lesserRightNode->key);
-      // return;
-    } else if (root->left != NULL) {
-      root = root->left;
-      return;
-    } else if (root->right != NULL) {
-      root = root->right;
-      return;
+        temp->left = pt;
+        pt->parent = temp;
     }
-  }
-  
-  if (key < root->key) removeNode(root->left, key);
-  if (key > root->key) removeNode(root->right, key);
 
-  root->h = calcHeight(root);
-  int bl = calcBalancing(root);
+    void rightRotate(Node *&root, Node *&pt) {
+        Node *temp = pt->left;
+        pt->left = temp->right;
 
-  if (bl > 1 && root->left != NULL && calcBalancing(root->left) >= 0) {
-    rotateRight(root);
-    return;
-  }
-  if (bl > 1 && root->left != NULL && calcBalancing(root->left) < 0) {
-    rotateLeft(root->left);
-    rotateRight(root);
-    return;
-  }
+        if (pt->left != nullptr)
+            pt->left->parent = pt;
 
-  if(bl < -1 && root->right != NULL && calcBalancing(root->right) <= 0) {
-    rotateLeft(root);
-    return;
-  }
-  if(bl < -1 && root->right != NULL && calcBalancing(root->right) > 0) {
-    rotateRight(root->right);
-    rotateLeft(root);
-    return;
-  }
-}
+        temp->parent = pt->parent;
 
-int main () {
-  node *tree = NULL;
-  insertNode(tree, 50);
-  insertNode(tree, 25);
-  insertNode(tree, 75);
-  insertNode(tree, 15);
-  insertNode(tree, 35);
-  insertNode(tree, 60);
-  insertNode(tree, 120);
-  insertNode(tree, 10);
-  insertNode(tree, 68);
-  insertNode(tree, 90);
-  insertNode(tree, 125);
-  insertNode(tree, 83);
-  insertNode(tree, 99);
+        if (pt->parent == nullptr)
+            root = temp;
+        else if (pt == pt->parent->left)
+            pt->parent->left = temp;
+        else
+            pt->parent->right = temp;
 
-  printPreOrder(tree);
-  printf("\n\n");
+        temp->right = pt;
+        pt->parent = temp;
+    }
 
-  removeNode(tree, 120);
+    void fixInsert(Node *&root, Node *&pt) {
+        Node *parent = nullptr;
+        Node *grandparent = nullptr;
 
-  printPreOrder(tree);
-  printf("\n\n");
+        while (pt != root && pt->color == 'R' && pt->parent->color == 'R') {
+            parent = pt->parent;
+            grandparent = parent->parent;
 
-  freeMemory(tree);
+            if (parent == grandparent->left) {
+                Node *uncle = grandparent->right;
 
-  return 0;
+                if (uncle != nullptr && uncle->color == 'R') {
+                    grandparent->color = 'R';
+                    parent->color = 'N';
+                    uncle->color = 'N';
+                    pt = grandparent;
+                } else {
+                    if (pt == parent->right) {
+                        leftRotate(root, parent);
+                        pt = parent;
+                        parent = pt->parent;
+                    }
+
+                    rightRotate(root, grandparent);
+                    std::swap(parent->color, grandparent->color);
+                    pt = parent;
+                }
+            } else {
+                Node *uncle = grandparent->left;
+
+                if (uncle != nullptr && uncle->color == 'R') {
+                    grandparent->color = 'R';
+                    parent->color = 'N';
+                    uncle->color = 'N';
+                    pt = grandparent;
+                } else {
+                    if (pt == parent->left) {
+                        rightRotate(root, parent);
+                        pt = parent;
+                        parent = pt->parent;
+                    }
+
+                    leftRotate(root, grandparent);
+                    std::swap(parent->color, grandparent->color);
+                    pt = parent;
+                }
+            }
+        }
+
+        root->color = 'N';
+    }
+
+    void inorderTraversal(Node *node) const {
+        if (node == nullptr)
+            return;
+
+        inorderTraversal(node->left);
+        std::cout << node->key << " (" << node->color << ") ";
+        inorderTraversal(node->right);
+    }
+
+public:
+    RedBlackTree() : root(nullptr) {}
+
+    void insert(int key) {
+        Node *newNode = new Node(key);
+        root = bstInsert(root, newNode);
+        fixInsert(root, newNode);
+    }
+
+    Node* bstInsert(Node* root, Node* pt) {
+        if (root == nullptr)
+            return pt;
+
+        if (pt->key < root->key) {
+            root->left = bstInsert(root->left, pt);
+            root->left->parent = root;
+        } else if (pt->key > root->key) {
+            root->right = bstInsert(root->right, pt);
+            root->right->parent = root;
+        }
+
+        return root;
+    }
+
+    void displayInOrder() const {
+        inorderTraversal(root);
+    }
+
+    ~RedBlackTree() {
+        deleteTree(root);
+    }
+
+private:
+    void deleteTree(Node *node) {
+        if (node == nullptr)
+            return;
+
+        deleteTree(node->left);
+        deleteTree(node->right);
+        delete node;
+    }
+};
+
+int main(void) {
+    RedBlackTree tree;
+
+    tree.insert(50);
+    tree.insert(25);
+    tree.insert(75);
+    tree.insert(15);
+    tree.insert(35);
+    tree.insert(60);
+    tree.insert(120);
+    tree.insert(10);
+    tree.insert(68);
+    tree.insert(90);
+    tree.insert(125);
+    tree.insert(83);
+    tree.insert(99);
+
+    std::cout << "\n\n";
+    tree.displayInOrder();
+    std::cout << std::endl;
+
+    return 0;
 }
