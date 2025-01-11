@@ -1,5 +1,19 @@
 # Trabalho de EDB2 - Unidade II
 
+## Contribuições
+* Warlike Richard da Silva Soares:
+  * Código da heap mínima
+  * Código do heapsort usando heap mínima
+  * Pseudocódigo da heapsort
+  * Análise de desempenho dos diferentes algoritmos de ordenação
+* Filipe Fernandes Campos:
+  * Insira aqui
+* Breno Jalmir de Medeiros Almeida:
+  * Código da heap máxima
+  * Código do heapsort usando heap mínima
+* João Guilherme Martins de Azevedo:
+  * Insira aqui
+
 ## 1. Heap
 
 ### Ambiente computacional
