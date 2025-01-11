@@ -128,6 +128,9 @@ public:
     RedBlackTree() : root(nullptr) {}
 
     void insert(int key) {
+        if (this->getNode(this->getRoot(), key) != nullptr) {
+            return;
+        }
         node *newNode = new node(key);
         root = bstInsert(root, newNode);
         fixInsert(root, newNode);
@@ -156,6 +159,13 @@ public:
         deleteTree(root);
     }
 
+    node *getNode(node *root, int key) {
+        if (root == nullptr || root->key == key) return root;
+        if (root->key > key) return getNode(root->left, key);
+        else if (root->key < key) return getNode (root->right, key);
+        return root;
+    }
+
 private:
     void deleteTree(node *node) {
         if (node == nullptr)
@@ -167,27 +177,25 @@ private:
     }
 };
 
-node *getNode(node *root, int key) {
-  if (root == nullptr || root->key == key) return root;
-  if (root->key > key) return getNode(root->left, key);
-  else if (root->key < key) return getNode (root->right, key);
-  return root;
-}
+
 
 int main(void) {
     RedBlackTree tree;
 
-    tree.insert(50);
-    tree.insert(25);
-    tree.insert(75);
     tree.insert(15);
+    tree.insert(18);
+    tree.insert(20);
     tree.insert(35);
+    tree.insert(32);
+    tree.insert(38);
+    tree.insert(30);
+    tree.insert(40);
+    tree.insert(32);
+    tree.insert(45);
+    tree.insert(48);
+    tree.insert(52);
     tree.insert(60);
-    tree.insert(120);
-    tree.insert(10);
-    tree.insert(68);
-    tree.insert(90);
-    tree.insert(125);
+    tree.insert(50);
 
     std::cout << "\n\n";
     tree.displayInOrder();
@@ -198,7 +206,7 @@ int main(void) {
     std::cin >> valor;
 
     std::cout << "Procurando " << valor << ": ";
-    if (getNode(tree.getRoot(), valor) != nullptr) {
+    if (tree.getNode(tree.getRoot(), valor) != nullptr) {
         std::cout << "Valor encontrado" << std::endl;
     }
     else {
