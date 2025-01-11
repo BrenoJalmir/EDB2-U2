@@ -9,6 +9,7 @@
 * Filipe Fernandes Campos:
   * Implementação da árvore rubro negra
   * Fluxograma da árvore rubro negra
+  * Visualização em gráfico da árvore rubro negra
 * Breno Jalmir de Medeiros Almeida:
   * Implementação da árvore binária de busca
   * Fluxograma de criação de árvore binária de busca
