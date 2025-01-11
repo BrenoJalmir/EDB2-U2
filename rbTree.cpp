@@ -1,12 +1,12 @@
 #include <iostream>
 
-class Node {
+class node {
 public:
     int key;
     char color; // 'R' para vermelho, 'N' para preto
-    Node *left, *right, *parent;
+    node *left, *right, *parent;
 
-    Node(int keyValue) {
+    node(int keyValue) {
         key = keyValue;
         color = 'R'; // Nós novos são sempre vermelhos inicialmente
         left = nullptr;
@@ -17,10 +17,10 @@ public:
 
 class RedBlackTree {
 private:
-    Node *root;
+    node *root;
 
-    void leftRotate(Node *&root, Node *&pt) {
-        Node *temp = pt->right;
+    void leftRotate(node *&root, node *&pt) {
+        node *temp = pt->right;
         pt->right = temp->left;
 
         if (pt->right != nullptr)
@@ -39,8 +39,8 @@ private:
         pt->parent = temp;
     }
 
-    void rightRotate(Node *&root, Node *&pt) {
-        Node *temp = pt->left;
+    void rightRotate(node *&root, node *&pt) {
+        node *temp = pt->left;
         pt->left = temp->right;
 
         if (pt->left != nullptr)
@@ -59,16 +59,16 @@ private:
         pt->parent = temp;
     }
 
-    void fixInsert(Node *&root, Node *&pt) {
-        Node *parent = nullptr;
-        Node *grandparent = nullptr;
+    void fixInsert(node *&root, node *&pt) {
+        node *parent = nullptr;
+        node *grandparent = nullptr;
 
         while (pt != root && pt->color == 'R' && pt->parent->color == 'R') {
             parent = pt->parent;
             grandparent = parent->parent;
 
             if (parent == grandparent->left) {
-                Node *uncle = grandparent->right;
+                node *uncle = grandparent->right;
 
                 if (uncle != nullptr && uncle->color == 'R') {
                     grandparent->color = 'R';
@@ -87,7 +87,7 @@ private:
                     pt = parent;
                 }
             } else {
-                Node *uncle = grandparent->left;
+                node *uncle = grandparent->left;
 
                 if (uncle != nullptr && uncle->color == 'R') {
                     grandparent->color = 'R';
@@ -111,7 +111,7 @@ private:
         root->color = 'N';
     }
 
-    void inorderTraversal(Node *node) const {
+    void inorderTraversal(node *node) const {
         if (node == nullptr)
             return;
 
@@ -121,15 +121,19 @@ private:
     }
 
 public:
+    node* getRoot() {
+        return root;
+    }
+
     RedBlackTree() : root(nullptr) {}
 
     void insert(int key) {
-        Node *newNode = new Node(key);
+        node *newNode = new node(key);
         root = bstInsert(root, newNode);
         fixInsert(root, newNode);
     }
 
-    Node* bstInsert(Node* root, Node* pt) {
+    node* bstInsert(node* root, node* pt) {
         if (root == nullptr)
             return pt;
 
@@ -153,7 +157,7 @@ public:
     }
 
 private:
-    void deleteTree(Node *node) {
+    void deleteTree(node *node) {
         if (node == nullptr)
             return;
 
@@ -162,6 +166,13 @@ private:
         delete node;
     }
 };
+
+node *getNode(node *root, int key) {
+  if (root == nullptr || root->key == key) return root;
+  if (root->key > key) return getNode(root->left, key);
+  else if (root->key < key) return getNode (root->right, key);
+  return root;
+}
 
 int main(void) {
     RedBlackTree tree;
@@ -177,12 +188,22 @@ int main(void) {
     tree.insert(68);
     tree.insert(90);
     tree.insert(125);
-    tree.insert(83);
-    tree.insert(99);
 
     std::cout << "\n\n";
     tree.displayInOrder();
-    std::cout << std::endl;
+    std::cout << "\n" << std::endl;
+
+    int valor;
+    std::cout << "Digite um valor a ser encontrado na árvore: ";
+    std::cin >> valor;
+
+    std::cout << "Procurando " << valor << ": ";
+    if (getNode(tree.getRoot(), valor) != nullptr) {
+        std::cout << "Valor encontrado" << std::endl;
+    }
+    else {
+        std::cout << "Valor não pertence a árvore" << std::endl;
+    }
 
     return 0;
 }
