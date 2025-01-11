@@ -7,7 +7,8 @@
   * Pseudocódigo da heapsort
   * Análise de desempenho dos diferentes algoritmos de ordenação
 * Filipe Fernandes Campos:
-  * Insira aqui
+  * Implementação da árvore rubro negra
+  * Fluxograma da árvore rubro negra
 * Breno Jalmir de Medeiros Almeida:
   * Código da heap máxima
   * Código do heapsort usando heap mínima
