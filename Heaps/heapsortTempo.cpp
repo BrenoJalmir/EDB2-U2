@@ -83,7 +83,7 @@ int main() {
     //captura o tempo de início
     auto start = std::chrono::high_resolution_clock::now();
 
-    std::string fileName = "./lista_1000000.txt";
+    std::string fileName = "../Listas/lista_10000.txt";
     std::ifstream list;
     list.open(fileName, std::ios::in);
 

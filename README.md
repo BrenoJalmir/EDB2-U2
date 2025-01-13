@@ -17,8 +17,11 @@
   * Código do heapsort usando heap máxima
   * Implementação da árvore avl
 * João Guilherme Martins de Azevedo:
-  * Revisão e Teste
+  * Revisão e Teste de códigos
   * Gravação do vídeo
+
+## Vídeo
+* [Aqui](https://github.com/BrenoJalmir/EDB2-U2/blob/main/Vídeo.mp4)
 
 ## 1. Heap
 
