@@ -202,7 +202,7 @@ int main(void) {
     std::cout << "\n" << std::endl;
 
     int valor;
-    std::cout << "Digite um valor a ser encontrado na árvore: ";
+    std::cout << "Digite um valor a ser encontrado na arvore: ";
     std::cin >> valor;
 
     std::cout << "Procurando " << valor << ": ";
@@ -210,7 +210,7 @@ int main(void) {
         std::cout << "Valor encontrado" << std::endl;
     }
     else {
-        std::cout << "Valor não pertence a árvore" << std::endl;
+        std::cout << "Valor nao pertence a arvore" << std::endl;
     }
 
     return 0;

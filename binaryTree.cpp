@@ -22,7 +22,7 @@ void freeMemory(node *&root) {
 
 void printPreOrder(node *root) {
   if (root == NULL) return;
-  std::cout << root->key;
+  std::cout << root->key << " ";
   printPreOrder(root->left);
   printPreOrder(root->right);
 }
@@ -30,7 +30,7 @@ void printPreOrder(node *root) {
 void printInOrder(node *root) {
   if (root == NULL) return;
   printInOrder(root->left);
-  std::cout << root->key;
+  std::cout << root->key << " ";
   printInOrder(root->right);
 }
 
@@ -38,7 +38,7 @@ void printPostOrder(node *root) {
   if (root == NULL) return;
   printPostOrder(root->left);
   printPostOrder(root->right);
-  std::cout << root->key;
+  std::cout << root->key << " ";
 }
 
 void printInLevel(node *root) {

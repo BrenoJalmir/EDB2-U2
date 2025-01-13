@@ -110,7 +110,7 @@ int main() {
 
     // Construção do Heap
     buildHeap(tree);
-    std::cout << "Heap mínimo construído: ";
+    std::cout << "Heap minimo construido: ";
     printVector(tree);
 
     // // Alteração de prioridade

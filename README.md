@@ -17,7 +17,8 @@
   * Código do heapsort usando heap máxima
   * Implementação da árvore avl
 * João Guilherme Martins de Azevedo:
-  * Insira aqui
+  * Revisão e Teste
+  * Gravação do vídeo
 
 ## 1. Heap
 
@@ -392,11 +393,11 @@ Alguns códigos não funcionaram para as listas de tamanho 1000000, e por isso t
 
 ![Graph10000](https://i.ibb.co/rZhzdFh/Sorts-10000.png)
 
-**Gráfico comparando o desempenho dos algoritmos ao ordenar uma lista com 10000 elementos**
+**Gráfico comparando o desempenho dos algoritmos ao ordenar uma lista com 100000 elementos**
 
 ![Graph100000](https://i.ibb.co/Y8G0xqv/Sorts-100000.png)
 
-**Gráfico comparando o desempenho dos algoritmos ao ordenar uma lista com 10000 elementos**
+**Gráfico comparando o desempenho dos algoritmos ao ordenar uma lista com 1000000 elementos**
 
 ![Graph1000000](https://i.ibb.co/yy7f64W/Sorts-1000000.png)
 

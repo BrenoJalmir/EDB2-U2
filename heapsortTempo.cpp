@@ -107,7 +107,7 @@ int main() {
     std::chrono::duration<double, std::micro> duration = end - start;
 
     // Exibe o tempo de execução
-    std::cout << "O código levou " << duration.count() << " microssegundos para rodar." << std::endl;
+    std::cout << "O codigo levou " << duration.count() << " microssegundos para rodar." << std::endl;
 
     return 0;
 }
